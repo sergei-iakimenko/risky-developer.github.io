@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Не на что тут смотреть! -->
+    <meta charset="UTF-8">
+    <title>wonderful page</title>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/tether/dist/js/tether.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="bower_components/tether/dist/css/tether.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="main.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="bd-example" id="main" tabindex="1">
+        <div class="row">
+            <div class="col-lg-1">
+                <button id="play_button7" class="btn btn-success" onclick="playAudio('audio7')">
+                    7
+                </button>
+            </div>
+            <div class="col-lg-1">
+                <button id="play_button8" class="btn btn-success" onclick="playAudio('audio8')">
+                    8
+                </button>
+            </div>
+            <div class="col-lg-1">
+                <button id="play_button9" class="btn btn-success" onclick="playAudio('audio9')">
+                    9
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1">
+                <button id="play_button4" class="btn btn-success" onclick="playAudio('audio4')">
+                    4
+                </button>
+            </div>
+            <div class="col-lg-1">
+                <button id="play_button5" class="btn btn-success" onclick="playAudio('audio5')">
+                    5
+                </button>
+            </div>
+            <div class="col-lg-1">
+                <button id="play_button6" class="btn btn-success" onclick="playAudio('audio6')">
+                    6
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1">
+                <button id="play_button1" class="btn btn-success" onclick="playAudio('audio1')">
+                    1
+                </button>
+            </div>
+            <div class="col-lg-1">
+                <button id="play_button2" class="btn btn-success" onclick="playAudio('audio2')">
+                    2
+                </button>
+            </div>
+            <div class="col-lg-1" onclick="playAudio('audio3')">
+                <button id="play_button3" class="btn btn-success">
+                    3
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <button id="play_button0" class="btn btn-success" onclick="playAudio('audio0')">
+                    0
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/main.js"></script>
+<script src="js/initializingAudio.js"></script>
+</html>
