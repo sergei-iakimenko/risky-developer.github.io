@@ -1,44 +1,65 @@
-// TODO: Вынести в отдельный объект
-var buttonSet = [];
-buttonSet[96]= {'btnName': 'play_button0', 'btnCode': '96', 'isUp': false};
+// Контейнер с данными о кнопках
+const buttons = [];
 
-buttonSet[97]= {'btnName': 'play_button1', 'btnCode': '97', 'isUp': false};
-buttonSet[98]= {'btnName': 'play_button2', 'btnCode': '98', 'isUp': false};
-buttonSet[99]= {'btnName': 'play_button3', 'btnCode': '99', 'isUp': false};
+const createAudioButton = (track, keys) => {
+    let isUp = false;
+    buttons.push({
+        track: track,
+        keys: keys,
+        get isUp() {
+            return isUp;
+        },
+        set isUp(value) {
+            // Защита от повторного проигрования из-за auto-repeat-а
+            if (isUp !== value) {
+                isUp = value;
+                var btn = document.getElementById(track);
+                if (!btn) {
+                    return;
+                }
 
-buttonSet[100]= {'btnName': 'play_button4', 'btnCode': '100', 'isUp': false};
-buttonSet[101]= {'btnName': 'play_button5', 'btnCode': '101', 'isUp': false};
-buttonSet[102]= {'btnName': 'play_button6', 'btnCode': '102', 'isUp': false};
+                // Инициализация проигрывания
+                pushButtonEvent.detail.isUp = isUp;
+                pushButtonEvent.detail.buttonObject = btn;
 
-buttonSet[103]= {'btnName': 'play_button7', 'btnCode': '103', 'isUp': false};
-buttonSet[104]= {'btnName': 'play_button8', 'btnCode': '104', 'isUp': false};
-buttonSet[105]= {'btnName': 'play_button9', 'btnCode': '105', 'isUp': false};
+                // Да пошло оно всё в handlePushButton
+                document.dispatchEvent(pushButtonEvent);
+            }
+        }
+    });
+};
 
-// Проигрывание аудио на кнопку при фокусировании на wonderful_div
-var lDiv = document.getElementById("main");
-lDiv.addEventListener("keydown", function (event) {
-    // Предотвращение обработки браузером назначенных комбинаций клавиш
-    event.preventDefault();
+const findAudioButton = keyCode => {
+    return buttons.find(item => item.keys.indexOf(keyCode) !== -1);
+};
 
-    if (!buttonSet[event.keyCode].isUp) {
-        buttonSet[event.keyCode].isUp = true;
-        var btn = document.getElementById(buttonSet[event.keyCode].btnName);
-        btn.classList.toggle('active');
+const buttonListener = (isUp, event) => {
+    const audioButton = findAudioButton(event.keyCode);
 
-        btn.click();
+    if (!audioButton) {
+        return;
     }
-});
 
-lDiv.addEventListener("keyup", function (event) {
-    // Предотвращение обработки браузером назначенных комбинаций клавиш
     event.preventDefault();
-    buttonSet[event.keyCode].isUp = false;
+    audioButton.isUp = isUp;
+};
 
-    let btn = document.getElementById( buttonSet[event.keyCode].btnName);
-    btn.classList.toggle('active');
-});
+document.addEventListener('keydown', buttonListener.bind(null, true));
+document.addEventListener('keyup', buttonListener.bind(null, false));
 
-lDiv.focus();
+createAudioButton('play_button0', [96, 48]);
+
+createAudioButton('play_button1', [97, 49]);
+createAudioButton('play_button2', [98, 50]);
+createAudioButton('play_button3', [99, 51]);
+
+createAudioButton('play_button4', [100, 52]);
+createAudioButton('play_button5', [101, 53]);
+createAudioButton('play_button6', [102, 54]);
+
+createAudioButton('play_button7', [103, 55]);
+createAudioButton('play_button8', [104, 56]);
+createAudioButton('play_button9', [105, 57]);
 
 /**
  * Отображает сообщение об ошибке
@@ -100,8 +121,8 @@ function playAudio(audioId) {
     if (isPlaying(myAudio)) {
         cloneAndPlay(myAudio);
     } else {
-        myAudio.play().then((message) => console.log("was good:" + message),
-            (message) => showErrorMessage("Something wrong: " + message));
+        myAudio.play().then((message) => console.log('was good:' + message),
+            (message) => showErrorMessage('Something wrong: ' + message));
     }
 }
 
@@ -111,23 +132,23 @@ function playAudio(audioId) {
 function handleKeyPress(event) {
     if (event.which != 0 && event.charCode != 0) { // все кроме IE
         if (event.which === 48) {
-            //let sample = new HTMLAudioElement("azaza.wav");
+            //let sample = new HTMLAudioElement('azaza.wav');
             //var myAudio = new Audio();        // create the audio object
-            //myAudio.src = "http://drd.fm/get/679115/ras_beats/control_your_own/02-wit_no_pressure_(feat._roc_marciano).mp3"; // assign the audio file to it
+            //myAudio.src = 'http://drd.fm/get/679115/ras_beats/control_your_own/02-wit_no_pressure_(feat._roc_marciano).mp3'; // assign the audio file to it
             var myAudio = document.getElementById('myAudio');
 
             if (isPlaying(myAudio)) {
                 cloneAndPlay(myAudio);
             } else {
-                //myAudio.src = "drum_mp3.mp3";
-                myAudio.play().then((message) => console.log("was good:" + message),
-                    (message) => showErrorMessage("Something wrong: " + message));
+                //myAudio.src = 'drum_mp3.mp3';
+                myAudio.play().then((message) => console.log('was good:' + message),
+                    (message) => showErrorMessage('Something wrong: ' + message));
             }
         } else if (event.which === 49) {
             var myAudio = document.getElementById('myAudio1');
-            //myAudio.src = "crash_mp3.mp3";
-            myAudio.play().then((message) => console.log("was good" + message),
-                (message) => showErrorMessage("Something wrong: " + message));
+            //myAudio.src = 'crash_mp3.mp3';
+            myAudio.play().then((message) => console.log('was good' + message),
+                (message) => showErrorMessage('Something wrong: ' + message));
         }
     }
 }

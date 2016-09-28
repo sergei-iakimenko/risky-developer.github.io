@@ -12,6 +12,25 @@ var audioPaths = [
     ,'samples/recoded/Toidiling Tom.wav'
 ];
 
+// Инициализация событий аудио
+const pushButtonEvent = new CustomEvent("pushButton", {
+    detail: {}
+});
+
+/**
+ * Обрабатывает нажатие кнопок
+ * @param {object} event - Событие вызванное нажатием кнопки.
+ */
+const handlePushButton = event => {
+    event.detail.buttonObject.classList.toggle('active', event.detail.isUp);
+
+    if (event.detail.isUp) {
+        event.detail.buttonObject.click();
+    }
+};
+
+document.addEventListener('pushButton', handlePushButton);
+
 /**
  * Создаёт элементы аудио и биндит их к путям файлов
  * @param {string[]} audioPaths - Пути к файлам.
