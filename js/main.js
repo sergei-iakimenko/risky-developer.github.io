@@ -36,12 +36,10 @@ const findAudioButton = keyCode => {
 const buttonListener = (isUp, event) => {
     const audioButton = findAudioButton(event.keyCode);
 
-    if (!audioButton) {
-        return;
+    if (audioButton) {
+        event.preventDefault();
+        audioButton.isUp = isUp;
     }
-
-    event.preventDefault();
-    audioButton.isUp = isUp;
 };
 
 document.addEventListener('keydown', buttonListener.bind(null, true));
@@ -123,33 +121,6 @@ function playAudio(audioId) {
     } else {
         myAudio.play().then((message) => console.log('was good:' + message),
             (message) => showErrorMessage('Something wrong: ' + message));
-    }
-}
-
-/**
- * @deprecated Может что-то в этом есть. Пригодится
- */
-function handleKeyPress(event) {
-    if (event.which != 0 && event.charCode != 0) { // все кроме IE
-        if (event.which === 48) {
-            //let sample = new HTMLAudioElement('azaza.wav');
-            //var myAudio = new Audio();        // create the audio object
-            //myAudio.src = 'http://drd.fm/get/679115/ras_beats/control_your_own/02-wit_no_pressure_(feat._roc_marciano).mp3'; // assign the audio file to it
-            var myAudio = document.getElementById('myAudio');
-
-            if (isPlaying(myAudio)) {
-                cloneAndPlay(myAudio);
-            } else {
-                //myAudio.src = 'drum_mp3.mp3';
-                myAudio.play().then((message) => console.log('was good:' + message),
-                    (message) => showErrorMessage('Something wrong: ' + message));
-            }
-        } else if (event.which === 49) {
-            var myAudio = document.getElementById('myAudio1');
-            //myAudio.src = 'crash_mp3.mp3';
-            myAudio.play().then((message) => console.log('was good' + message),
-                (message) => showErrorMessage('Something wrong: ' + message));
-        }
     }
 }
 
