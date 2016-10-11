@@ -29,27 +29,24 @@ const handlePushButton = event => {
     }
 };
 
+// Привязка к событию нажатия кнопки обработчика
 document.addEventListener('pushButton', handlePushButton);
+
+// Создание экземпляра одъекта проигрывателя
+const player = new SoundPlayer();
 
 /**
  * Создаёт элементы аудио и биндит их к путям файлов
  * @param {string[]} audioPaths - Пути к файлам.
  */
-function initializeAudioElems(audioPaths) {
+const initializeAudioElems = audioPaths => {
     if (audioPaths.length === 10) {
         for (let i = 0; i < audioPaths.length; i++) {
-            let audioElement = document.createElement('audio');
-
-            // TODO: определиться с именованием имён кнопок
-            audioElement.id = 'audio' + i;
-            audioElement.src = audioPaths[i];
-            audioElement.setAttribute('type', 'audio/mp3');
-            audioElement.preload = 'auto';
-            document.body.appendChild(audioElement);
+            player.loadSound(audioPaths[i]);
         }
     } else {
         showErrorMessage('Неккоретная структура путей к аудиофайлам')
     }
-}
+};
 
 initializeAudioElems(audioPaths);

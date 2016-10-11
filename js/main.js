@@ -1,6 +1,11 @@
 // Контейнер с данными о кнопках
 const buttons = [];
 
+/**
+ * Создаёт элемент массива с данными о нажимаемой кнопке.
+ * @param {string} track Расположение трека.
+ * @param {Array} keys Ключи, связанные с кодом нажатия клавиш в разных операционных системах.
+ */
 const createAudioButton = (track, keys) => {
     let isUp = false;
     buttons.push({
@@ -29,10 +34,18 @@ const createAudioButton = (track, keys) => {
     });
 };
 
+/**
+ * Находит данные нажатой кнопки в массиве кнопок.
+ * @param {number} keyCode Код кнопки.
+ */
 const findAudioButton = keyCode => {
     return buttons.find(item => item.keys.indexOf(keyCode) !== -1);
 };
 
+/**
+ * Инициализирует обработку нажатия кнопки на странице.
+ * @param {boolean} isUp Нажата/отпущена ли кнопка.
+ */
 const buttonListener = (isUp, event) => {
     const audioButton = findAudioButton(event.keyCode);
 
@@ -89,6 +102,7 @@ function showErrorMessage(message) {
 }
 
 /**
+ * @deprecated Теперь звук воспроизводится с помощью web audio API
  * Клонирует аудио-объект
  * @param {object} parentAudio - Копируемый объект
  */
@@ -103,6 +117,7 @@ function cloneAndPlay(parentAudio) {
 }
 
 /**
+ * @deprecated Теперь звук воспроизводится с помощью web audio API
  * Проверяет, проигрывается ли аудио в данный момент
  * @param {object} audio - Объект время которого будет сброшено.
  */
@@ -111,6 +126,7 @@ function isPlaying(audio) {
 }
 
 /**
+ * @deprecated Теперь звук воспроизводится с помощью web audio API
  * Проигрывает аудио по указанному идентификатору в DOM-е
  * @param {string} audioId - Идентификатор элемента аудио.
  */
