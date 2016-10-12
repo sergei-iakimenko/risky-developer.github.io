@@ -19,7 +19,7 @@ class SoundPlayer {
      * Загружает буфер с бинарными данными трека в массив буферов.
      * @param {string} url message {string} Расположение трека.
      */
-    loadSound(url) {
+    loadSound(name, url) {
         // Запрос трека с сервера
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
@@ -32,7 +32,7 @@ class SoundPlayer {
             self.audioContext.decodeAudioData(this.response,
                 function(decodedArrayBuffer) {
                     // Добавление декодированного буфера в свойство-массив буферов
-                    self.buffers[`${Object.keys(self.buffers).length}buffer`] = decodedArrayBuffer;
+                    self.buffers[name] = decodedArrayBuffer;
                 }, function(e) {
                     console.log('Error decoding file', e);
                 });
@@ -42,7 +42,7 @@ class SoundPlayer {
 
     /**
      * Проигрывает выбранный трек.
-     * @param {number} i Индекс буфера проигрываемого трека в свойстве-массиве буферов.
+     * @param {String} bufferName Заданное имя проигрываемого трека в свойстве-массиве буферов.
      */
     playSound(bufferName) {
         let anotherSource = this.audioContext.createBufferSource();
