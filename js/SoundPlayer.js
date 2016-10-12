@@ -32,7 +32,7 @@ class SoundPlayer {
             self.audioContext.decodeAudioData(this.response,
                 function(decodedArrayBuffer) {
                     // Добавление декодированного буфера в свойство-массив буферов
-                    self.buffers.push(decodedArrayBuffer);
+                    self.buffers[`${Object.keys(self.buffers).length}buffer`] = decodedArrayBuffer;
                 }, function(e) {
                     console.log('Error decoding file', e);
                 });
@@ -44,9 +44,9 @@ class SoundPlayer {
      * Проигрывает выбранный трек.
      * @param {number} i Индекс буфера проигрываемого трека в свойстве-массиве буферов.
      */
-    playSound(i) {
+    playSound(bufferName) {
         let anotherSource = this.audioContext.createBufferSource();
-        anotherSource.buffer = this.buffers[i];
+        anotherSource.buffer = this.buffers[bufferName];
         anotherSource.connect(this.audioContext.destination);
 
         // После проигрывания источник звука нельзя использовать
