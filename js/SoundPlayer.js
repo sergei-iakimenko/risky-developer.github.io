@@ -17,28 +17,23 @@ class SoundPlayer {
 
     /**
      * Загружает буфер с бинарными данными трека в массив буферов.
-     * @param {string} url message {string} Расположение трека.
+     * @param {string} name Имя (алиас) загружаемой аудиозаписи
+     * @param {string} url Расположение трека.
      */
     loadSound(name, url) {
-        // Запрос трека с сервера
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.responseType = 'arraybuffer';
-
         // self решает коллизию с текущими объектами this
         let self = this;
-        xhr.onload = function(e) {
+        fetch(url).then(function(response) {
+            return response.arrayBuffer();
+        }).then(function(buffer) {
             // Декодирует ответ, полученный в бинарном виде
-            self.audioContext.decodeAudioData(this.response,
-                function(decodedArrayBuffer) {
-                    // Добавление декодированного буфера в свойство-массив буферов
-                    self.buffers[name] = decodedArrayBuffer;
-                }, function(e) {
-                    console.log('Error decoding file', e);
-                });
-        };
-        xhr.send();
-    };
+            self.audioContext.decodeAudioData(buffer, function(decodedArrayBuffer) {
+            self.buffers[name] = decodedArrayBuffer;
+            });
+        }).catch(function (err) {
+            console.error(err);
+        });
+    }
 
     /**
      * Проигрывает выбранный трек.

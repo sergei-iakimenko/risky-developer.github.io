@@ -1,5 +1,5 @@
 // Пути к аудиофайлам, биндящимся к кнопкам
-var audioPaths = [
+const audioPaths = [
     {name: '0audio', path: 'samples/recoded/crash 1 v9 rr1.wav'}
     ,{name: '1audio', path: 'samples/recoded/snare 3 v1 rr1.wav'}
     ,{name: '2audio', path: 'samples/recoded/snare 3 v3 rr1.wav'}
