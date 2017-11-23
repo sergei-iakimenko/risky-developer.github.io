@@ -22,7 +22,7 @@ const pushButtonEvent = new CustomEvent("pushButton", {
  * @param {object} event - Событие вызванное нажатием кнопки.
  */
 const handlePushButton = event => {
-    event.detail.buttonObject.classList.toggle('active', event.detail.isUp);
+    event.detail.buttonObject.classList.toggle('pad_active', event.detail.isUp);
 
     if (event.detail.isUp) {
         event.detail.buttonObject.click();
