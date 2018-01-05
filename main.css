@@ -18,15 +18,13 @@
     border-radius: 5px;
 }
 
-.row [class^="col-"] {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    background-color: rgba(86, 61, 124, 0.15);
-    border: 1px solid rgba(86, 61, 124, 0.2);
+.row {
+    display: flex;
+    padding: 5vw;
 }
 
 .pad-container {
-    min-height: 100vh;
+    min-height: 98vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -76,4 +74,27 @@
 .pad_active {
     background-color: aqua;
     color: #818a91;
+}
+
+
+.sequence-container {
+    overflow-y: scroll;
+    width: 5vw;
+    height: 400px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    border: 2px solid cadetblue;
+    border-radius: 4px;
+
+    margin-left: 5vw;
+}
+
+.tap {
+    width: 100%;
+    height: 5vh;
+    padding-top: 2vh;
+    padding-bottom: 3vh;
 }

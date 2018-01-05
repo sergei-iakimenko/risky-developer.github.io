@@ -9,6 +9,7 @@ class SoundPlayer {
         try {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.buffers = [];
+            this.mode = 'play';
         }
         catch(e) {
             alert('Браузер не поддерживает web audio API');
@@ -51,5 +52,16 @@ class SoundPlayer {
         };
 
         anotherSource.start();
+    }
+
+    /**
+     * Handle tap of pad set.
+     * @param {String} tapName Name of sample of taped pad.
+     */
+    handleTap(tapName) {
+        this.playSound(tapName);
+        if (this.mode === 'record') {
+            timings.addTiming(tapName);
+        }
     }
 }
