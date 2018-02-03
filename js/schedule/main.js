@@ -2,12 +2,6 @@ let minutesElement = document.getElementById('minutes');
 let secondsElement = document.getElementById('seconds');
 let millisecondsElement = document.getElementById('milliseconds');
 
-const startButton = document.getElementById('start');
-const stopButton = document.getElementById('stop');
-
-let sequenceContainer = document.getElementsByClassName('sequence-container');
-
-
 let timeLeft = 0;
 let replayTimeLeft = 0;
 
@@ -47,6 +41,19 @@ const stopSchedule = () => {
     player.mode = 'play';
 
     clearAllTimeouts();
+};
+
+
+/**
+ * Switches state of timer
+ */
+const switchScheduleState = () => {
+
+    if (player.mode === 'record') {
+        stopSchedule()
+    } else {
+        startSchedule()
+    }
 };
 
 /**
@@ -104,11 +111,3 @@ const printTime = () => {
     let timeoutId = setTimeout(printTime, 10);
     timeouts.push(timeoutId);
 };
-
-startButton.addEventListener('click', () => {
-    startSchedule();
-}, false);
-
-stopButton.addEventListener('click', () => {
-    stopSchedule();
-}, false);

@@ -22,6 +22,10 @@
     display: flex;
     padding: 5vw;
 }
+.row-item {
+    margin-left: 2vh;
+    margin-right: 2vh
+}
 
 .pad-container {
     min-height: 98vh;
@@ -44,6 +48,15 @@
     border-radius: 5px;
     padding: 20px;
     font-size: 150%;
+}
+
+.button {
+    color: #fff;
+    border-radius: 5px;
+    background-color: darkslategray;
+}
+.button:active {
+    background-color: darkcyan;
 }
 
 .pad {
@@ -71,11 +84,6 @@
     color: #818a91;
 }
 
-.pad_active {
-    background-color: aqua;
-    color: #818a91;
-}
-
 
 .sequence-container {
     overflow-y: scroll;
@@ -88,8 +96,6 @@
 
     border: 2px solid cadetblue;
     border-radius: 4px;
-
-    margin-left: 5vw;
 }
 
 .tap {
