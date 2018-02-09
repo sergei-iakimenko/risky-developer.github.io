@@ -109,6 +109,11 @@
     color: #818a91;
 }
 
+/* Use to highlight when passed key */
+.pad_active {
+    background-color: aqua;
+    color: #818a91;
+}
 
 .sequence-container {
     overflow-y: scroll;
