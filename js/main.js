@@ -18,7 +18,7 @@ const createAudioButton = (track, keys) => {
             // Защита от повторного проигрования из-за auto-repeat-а
             if (isUp !== value) {
                 isUp = value;
-                var btn = document.getElementById(track);
+                const btn = document.getElementById(track);
                 if (!btn) {
                     return;
                 }
@@ -42,9 +42,14 @@ const findAudioButton = keyCode => {
     return buttons.find(item => item.keys.indexOf(keyCode) !== -1);
 };
 
+const handleFunctionalButton = keyCode => {
+    // TODO: implement , (replay) handling. Also it's about all functional buttons
+};
+
 /**
  * Инициализирует обработку нажатия кнопки на странице.
  * @param {boolean} isUp Нажата/отпущена ли кнопка.
+ * @param {object} event Tap pad event
  */
 const buttonListener = (isUp, event) => {
     const audioButton = findAudioButton(event.keyCode);
@@ -77,14 +82,14 @@ createAudioButton('play_button9', [105, 57]);
  * @param {string} message - Текст сообщения.
  */
 function showErrorMessage(message) {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     div.id = 'error_message';
     div.className = 'alert alert-danger alert-dismissible fade in';
     div.setAttribute('role', 'alert');
     div.textContent = message;
 
     // Инициализирование кнопки закрытия сообщения
-    var closeButton = document.createElement('button');
+    let closeButton = document.createElement('button');
     closeButton.type = 'button';
     closeButton.className = 'close';
     closeButton.setAttribute('data-dismiss', 'alert');
@@ -93,51 +98,12 @@ function showErrorMessage(message) {
     div.appendChild(closeButton);
 
     // Добавление значка крестика
-    var span = document.createElement('span');
+    let span = document.createElement('span');
     span.setAttribute('aria-hidden', 'true');
     span.innerHTML = '&times';
 
     closeButton.appendChild(span);
     document.body.appendChild(div);
-}
-
-/**
- * @deprecated Теперь звук воспроизводится с помощью web audio API
- * Клонирует аудио-объект
- * @param {object} parentAudio - Копируемый объект
- */
-function cloneAndPlay(parentAudio) {
-    var childAudio = parentAudio.cloneNode();
-    childAudio.play();
-
-    // Удаление клона после окончания аудио
-    childAudio.onended = function () {
-        delete this;
-    }
-}
-
-/**
- * @deprecated Теперь звук воспроизводится с помощью web audio API
- * Проверяет, проигрывается ли аудио в данный момент
- * @param {object} audio - Объект время которого будет сброшено.
- */
-function isPlaying(audio) {
-    return !audio.paused && !audio.ended && 0 < audio.currentTime;
-}
-
-/**
- * @deprecated Теперь звук воспроизводится с помощью web audio API
- * Проигрывает аудио по указанному идентификатору в DOM-е
- * @param {string} audioId - Идентификатор элемента аудио.
- */
-function playAudio(audioId) {
-    var myAudio = document.getElementById(audioId);
-    if (isPlaying(myAudio)) {
-        cloneAndPlay(myAudio);
-    } else {
-        myAudio.play().then((message) => console.log('was good:' + message),
-            (message) => showErrorMessage('Something wrong: ' + message));
-    }
 }
 
 // TODO: сделать обработчик на возможность воспроизведения, canPlayType()

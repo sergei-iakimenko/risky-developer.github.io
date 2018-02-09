@@ -76,8 +76,6 @@ const playSchedule = () => {
 
                 })
 
-
-                //timings.appendTimingToDiv('replay_timings', replayTimeLeft);
             } else if (replayTimeLeft >= currentTimeLength) {
                 clearInterval(replayTimeoutId);
                 stopSchedule();

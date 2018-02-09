@@ -8,35 +8,22 @@
 </head>
 <body>
 
-
-<div id="timer_div">
-    <div>
-        <p id="minutes">00</p>
-    </div>
-    <p>:</p>
-    <div>
-        <p id="seconds">00</p>
-    </div>
-    <p>:</p>
-    <div>
-        <p id="milliseconds">00</p>
-    </div>
-</div>
-
-<button onclick="timings.addTiming()">save time</button>
-
-<button id="replay" onclick="playSchedule()">replay</button>
-
-<div id="timings">Timings </div>
-<div id="replay_timings">Replay timings</div>
-
 <div class="pad-container">
-    <div class="bd-example row">
-
+    <div class="bd-example row row--wide-padded">
         <div class="pad-set row-item" tabindex="1">
+
+            <div class="row row--normal-padded timer-in-pad">
+                <p id="minutes">00</p>
+                <p>:</p>
+                <p id="seconds">00</p>
+                <p>:</p>
+                <p id="milliseconds">0</p>
+            </div>
             <button id="play_button7" class="pad" onclick="player.handleTap('7audio')">7</button>
             <button id="play_button8" class="pad" onclick="player.handleTap('8audio')">8</button>
             <button id="play_button9" class="pad" onclick="player.handleTap('9audio')">9</button>
+
+            <div class="plus-button-space" ></div>
 
             <button id="play_button4" class="pad" onclick="player.handleTap('4audio')">4</button>
             <button id="play_button5" class="pad" onclick="player.handleTap('5audio')">5</button>
@@ -46,11 +33,13 @@
             <button id="play_button2" class="pad" onclick="player.handleTap('2audio')">2</button>
             <button id="play_button3" class="pad" onclick="player.handleTap('3audio')">3</button>
             <button id="play_button0" class="zero-pad pad" onclick="player.handleTap('0audio')">0</button>
+            <button onclick="switchScheduleState()" class="functional-button enter-in-pad">Enter</button>
+            <button class="functional-button" onclick="playSchedule()">,</button>
+
         </div>
 
-        <button onclick="switchScheduleState()" class="button row-item">Enter</button>
+        <div class="sequence-container" ></div>
 
-        <div class="sequence-container row-item" />
     </div>
 </div>
 </body>
