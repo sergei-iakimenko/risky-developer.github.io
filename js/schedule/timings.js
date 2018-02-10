@@ -10,13 +10,14 @@ const timings = {
         this.timingSet.push(timeLeft);
         this.padSoundArray.push(soundName);
 
-        // Adding div with elapsed milliseconds from start
-        this.appendTimingToDiv('sequence-container', timeLeft);
+        // Adding div with elapsed time from start
+        this.appendTimingToDiv('sequence-container',
+            millisecondsConverter.toString(timeLeft));
     },
     /**
      * Appends div with seconds upcoming from start to div with set name
      * @param {string} divName div to append milliseconds info
-     * @param {number} timingValue value for output
+     * @param {string} timingValue value for output
      */
     appendTimingToDiv: function (divName, timingValue) {
         const timingMarkButton = document.createElement('button');

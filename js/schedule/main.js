@@ -88,22 +88,11 @@ const playSchedule = () => {
  * Outputs time, elapsed from start button pushed
  */
 const printTime = () => {
+    const timeObject = millisecondsConverter.toTimeObject(timeLeft);
 
-    let innerTime = timeLeft;
-    innerTime = innerTime % (1000 * 3600 * 24);
-    innerTime = innerTime % (3600 * 1000);
-
-    minutesElement.textContent = Math.floor(innerTime / (60 * 1000)).toString().padStart(2, '0');
-
-    innerTime = innerTime % (60 * 1000);
-    let secondsMilliSeconds = String(innerTime / 1000).split('.');
-
-    let seconds = secondsMilliSeconds[0].padStart(2, '0');
-    let milliseconds = secondsMilliSeconds[1] && secondsMilliSeconds[1] !== '' ? secondsMilliSeconds[1][0]
-        : '0';
-
-    secondsElement.textContent = seconds;
-    millisecondsElement.textContent = milliseconds;
+    minutesElement.textContent = timeObject.minutes;
+    secondsElement.textContent = timeObject.seconds;
+    millisecondsElement.textContent = timeObject.milliseconds;
 
     timeLeft += 10;
     let timeoutId = setTimeout(printTime, 10);
