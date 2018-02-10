@@ -19,13 +19,13 @@ const timings = {
      * @param {number} timingValue value for output
      */
     appendTimingToDiv: function (divName, timingValue) {
-        const tapButton = document.createElement('button');
-        tapButton.className = 'tap';
+        const timingMarkButton = document.createElement('button');
+        timingMarkButton.className = 'timing-mark';
 
-        tapButton.textContent = timingValue !== undefined? timingValue : secondsElement.textContent;
+        timingMarkButton.textContent = timingValue !== undefined? timingValue : secondsElement.textContent;
 
         // Adding div with elapsed milliseconds from start with to div with set name
         const timingsElement = document.getElementsByClassName(divName);
-        timingsElement[0].appendChild(tapButton);
+        timingsElement[0].appendChild(timingMarkButton);
     }
 };
