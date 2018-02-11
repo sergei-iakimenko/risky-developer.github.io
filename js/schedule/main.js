@@ -88,7 +88,7 @@ const playSchedule = () => {
  * Outputs time, elapsed from start button pushed
  */
 const printTime = () => {
-    const timeObject = millisecondsConverter.toTimeObject(timeLeft);
+    const timeObject = MillisecondsConverter.toTimeObject(timeLeft);
 
     minutesElement.textContent = timeObject.minutes;
     secondsElement.textContent = timeObject.seconds;

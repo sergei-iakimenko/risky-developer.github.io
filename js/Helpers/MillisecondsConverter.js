@@ -1,13 +1,13 @@
 /**
  * Provides approaches to convert milliseconds represented by number value to required value
- * @type {{toTimeObject: millisecondsConverter.toTimeObject, toString: millisecondsConverter.toString}}
+ * @type {{toTimeObject: MillisecondsConverter.toTimeObject, toString: MillisecondsConverter.toString}}
  */
-const millisecondsConverter = {
+class MillisecondsConverter {
     /**
      * Convert milliseconds to custom time object
      * @returns {{minutes: string, seconds: string, milliseconds: string}}
      */
-    toTimeObject: function (incomingMilliseconds) {
+    static toTimeObject (incomingMilliseconds) {
         let innerTime = incomingMilliseconds;
         innerTime = innerTime % (1000 * 3600 * 24);
         innerTime = innerTime % (3600 * 1000);
@@ -22,13 +22,13 @@ const millisecondsConverter = {
             : '0';
 
         return {minutes, seconds, milliseconds};
-    },
+    }
 
     /**
      * Convert custom time object to readable string
      * @returns {string}
      */
-    toString: function (incomingMilliseconds) {
+    static toString (incomingMilliseconds) {
         const timeObject = this.toTimeObject(incomingMilliseconds);
         return `${timeObject.minutes}:${timeObject.seconds}:${timeObject.milliseconds}`;
     }

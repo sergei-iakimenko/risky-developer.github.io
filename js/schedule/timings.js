@@ -12,7 +12,7 @@ const timings = {
 
         // Adding div with elapsed time from start
         this.appendTimingToDiv('sequence-container',
-            millisecondsConverter.toString(timeLeft));
+            MillisecondsConverter.toString(timeLeft));
     },
     /**
      * Appends div with seconds upcoming from start to div with set name
