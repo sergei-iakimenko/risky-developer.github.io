@@ -1,25 +1,28 @@
 /**
- * Object of timings' set
- * @type {{timingSet: Array, addTiming: timings.addTiming, appendTimingToDiv: timings.appendTimingToDiv}}
+ * Represents sequence of sounds
  */
-const timings = {
-    timingSet: [],
-    padSoundArray: [],
-    addTiming: function(soundName) {
+class Sequence {
+    constructor () {
+        this.timingSet = [];
+        this.padSoundArray = [];
+    }
+
+    // Adding timing to array
+    addTiming(soundName) {
         // Adding timing to array
-        this.timingSet.push(timeLeft);
+        this.timingSet.push(schedule.timeLeft);
         this.padSoundArray.push(soundName);
 
         // Adding div with elapsed time from start
         this.appendTimingToDiv('sequence-container',
-            MillisecondsConverter.toString(timeLeft));
-    },
+            MillisecondsConverter.toString(schedule.timeLeft));
+    }
     /**
      * Appends div with seconds upcoming from start to div with set name
      * @param {string} divName div to append milliseconds info
      * @param {string} timingValue value for output
      */
-    appendTimingToDiv: function (divName, timingValue) {
+    appendTimingToDiv(divName, timingValue) {
         const timingMarkButton = document.createElement('button');
         timingMarkButton.className = 'timing-mark';
 
@@ -29,4 +32,4 @@ const timings = {
         const timingsElement = document.getElementsByClassName(divName);
         timingsElement[0].appendChild(timingMarkButton);
     }
-};
+}

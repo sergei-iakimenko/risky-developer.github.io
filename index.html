@@ -33,8 +33,8 @@
             <button id="play_button2" class="pad" onclick="player.handleTap('2audio')">2</button>
             <button id="play_button3" class="pad" onclick="player.handleTap('3audio')">3</button>
             <button id="play_button0" class="zero-pad pad" onclick="player.handleTap('0audio')">0</button>
-            <button onclick="switchScheduleState()" class="functional-button enter-in-pad">Enter</button>
-            <button class="functional-button" onclick="playSchedule()">,</button>
+            <button onclick="schedule.switchScheduleState()" class="functional-button enter-in-pad">Enter</button>
+            <button class="functional-button" onclick="schedule.playSchedule()">,</button>
 
         </div>
 
@@ -44,12 +44,12 @@
 </div>
 </body>
 
-<script src="js/Helpers/MillisecondsConverter.js"></script>
+<script async src="js/Helpers/MillisecondsConverter.js"></script>
 
-<script src="js/SoundPlayer.js"></script>
-<script src="js/main.js"></script>
-<script src="js/initializingAudio.js"></script>
+<script async src="js/SoundPlayer.js"></script>
+<script async src="js/main.js"></script>
+<script async src="js/initializingAudio.js"></script>
 
-<script src="js/schedule/main.js"></script>
-<script src="js/schedule/timings.js"></script>
+<script async src="js/schedule/Sequence.js"></script>
+<script async src="js/schedule/Schedule.js"></script>
 </html>

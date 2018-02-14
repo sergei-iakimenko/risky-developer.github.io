@@ -61,7 +61,7 @@ class SoundPlayer {
     handleTap(tapName) {
         this.playSound(tapName);
         if (this.mode === 'record') {
-            timings.addTiming(tapName);
+            schedule.sequences[schedule.currentSequence].addTiming(tapName);
         }
     }
 }
