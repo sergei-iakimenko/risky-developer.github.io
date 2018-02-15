@@ -15,11 +15,18 @@ class Schedule {
         this.currentTimeLength = 0;
         this.timeouts = [];
 
-        this.currentSequence = 0;
+        this.currentSequenceIndex = 0;
 
         let sequence = new Sequence();
         this.sequences = [];
         this.sequences.push(sequence);
+    }
+
+    /**
+     * @returns {object} Currently chosen sequence of sounds
+     */
+    get currentSequence () {
+        return this.sequences[this.currentSequenceIndex];
     }
 
     /**
@@ -97,10 +104,10 @@ class Schedule {
             this.replayTimeLeft += 10;
 
             // TODO: Compose timings into Schedule
-            if (this.sequences[this.currentSequence].timingSet.indexOf(this.replayTimeLeft) >= 0) {
-                this.sequences[this.currentSequence].timingSet.forEach((value, index) => {
+            if (this.currentSequence.timingList.indexOf(this.replayTimeLeft) >= 0) {
+                this.currentSequence.timingList.forEach((value, index) => {
 
-                    const soundName = this.sequences[this.currentSequence].padSoundArray[index];
+                    const soundName = this.currentSequence.soundNameList[index];
                     if (value === this.replayTimeLeft)
                         player.playSound(soundName);
 

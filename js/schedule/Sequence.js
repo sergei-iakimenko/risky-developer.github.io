@@ -3,15 +3,15 @@
  */
 class Sequence {
     constructor () {
-        this.timingSet = [];
-        this.padSoundArray = [];
+        this.timingList = [];
+        this.soundNameList = [];
     }
 
     // Adding timing to array
     addTiming(soundName) {
         // Adding timing to array
-        this.timingSet.push(schedule.timeLeft);
-        this.padSoundArray.push(soundName);
+        this.timingList.push(schedule.timeLeft);
+        this.soundNameList.push(soundName);
 
         // Adding div with elapsed time from start
         this.appendTimingToDiv('sequence-container',
@@ -26,7 +26,8 @@ class Sequence {
         const timingMarkButton = document.createElement('button');
         timingMarkButton.className = 'timing-mark';
 
-        timingMarkButton.textContent = timingValue !== undefined? timingValue : secondsElement.textContent;
+        timingMarkButton.textContent = timingValue !== undefined ?
+            timingValue : console.error('Wrong time value');
 
         // Adding div with elapsed milliseconds from start with to div with set name
         const timingsElement = document.getElementsByClassName(divName);
