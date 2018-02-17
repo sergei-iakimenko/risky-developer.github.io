@@ -3,7 +3,10 @@
  * To be enhanced to any size of sequences, now only one
  */
 class Schedule {
-    constructor () {
+    /**
+     * @param {string[]} audioPaths - Paths to audio files.
+     */
+    constructor (audioPaths) {
         this.minutesElement = document.getElementById('minutes');
         this.secondsElement = document.getElementById('seconds');
         this.millisecondsElement = document.getElementById('milliseconds');
@@ -20,6 +23,8 @@ class Schedule {
         let sequence = new Sequence();
         this.sequences = [];
         this.sequences.push(sequence);
+
+        this.player = new SoundPlayer(audioPaths)
     }
 
     /**
@@ -61,9 +66,7 @@ class Schedule {
 
         this.timeLeft = 0;
         this.timeouts = [];
-
-        // TODO: Compose player into Schedule class
-        player.mode = 'record';
+        this.player.mode = 'record';
 
         this.printTime();
     }
@@ -78,7 +81,7 @@ class Schedule {
         this.replayTimeLeft = 0;
 
         this.printTime();
-        player.mode = 'play';
+        this.player.mode = 'play';
 
         this.clearAllTimeouts();
     }
@@ -87,7 +90,7 @@ class Schedule {
      * Switches state of timer
      */
     switchScheduleState () {
-        if (player.mode === 'record') {
+        if (this.player.mode === 'record') {
             this.stopSchedule()
         } else {
             this.startSchedule()
@@ -103,14 +106,12 @@ class Schedule {
         let replayTimeoutId = setInterval(() => {
             this.replayTimeLeft += 10;
 
-            // TODO: Compose timings into Schedule
             if (this.currentSequence.timingList.indexOf(this.replayTimeLeft) >= 0) {
                 this.currentSequence.timingList.forEach((value, index) => {
 
                     const soundName = this.currentSequence.soundNameList[index];
                     if (value === this.replayTimeLeft)
-                        player.playSound(soundName);
-
+                        this.player.playSound(soundName);
                 });
 
             } else if (this.replayTimeLeft >= this.currentTimeLength) {
@@ -121,4 +122,4 @@ class Schedule {
     }
 }
 
-let schedule = new Schedule();
+let schedule = new Schedule(audioPaths);

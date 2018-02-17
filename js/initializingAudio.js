@@ -31,22 +31,3 @@ const handlePushButton = event => {
 
 // Привязка к событию нажатия кнопки обработчика
 document.addEventListener('pushButton', handlePushButton);
-
-// Создание экземпляра одъекта проигрывателя
-const player = new SoundPlayer();
-
-/**
- * Создаёт элементы аудио и биндит их к путям файлов
- * @param {string[]} audioPaths - Пути к файлам.
- */
-const initializeAudioElems = audioPaths => {
-    if (audioPaths.length === 10) {
-        for (let i = 0; i < audioPaths.length; i++) {
-            player.loadSound(audioPaths[i].name, audioPaths[i].path);
-        }
-    } else {
-        showErrorMessage('Неккоретная структура путей к аудиофайлам')
-    }
-};
-
-initializeAudioElems(audioPaths);

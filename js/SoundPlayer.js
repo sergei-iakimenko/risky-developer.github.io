@@ -1,35 +1,38 @@
 'use strict';
 
-/** Класс представляет событийный проигрыватель звуков. */
+/** Event driven audio player **/
 class SoundPlayer {
-    /**
-     * Создаёт экземпляр объекта плеера.
-     */
-    constructor() {
+    constructor(audioPaths) {
         try {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.buffers = [];
             this.mode = 'play';
         }
         catch(e) {
-            alert('Браузер не поддерживает web audio API');
+            alert("Browser don't supports Web Audio APO");
+        }
+
+        // Creation of audio elements and binding them on sound paths
+        if (audioPaths.length === 10) {
+            for (let i = 0; i < audioPaths.length; i++) {
+                this.loadSound(audioPaths[i].name, audioPaths[i].path);
+            }
+        } else {
+            console.error('Incorrect path structure to audio files');
         }
     }
 
     /**
-     * Загружает буфер с бинарными данными трека в массив буферов.
-     * @param {string} name Имя (алиас) загружаемой аудиозаписи
-     * @param {string} url Расположение трека.
+     * Load buffer of track's binary data to buffer array
+     * @param {string} name Name (alias) of loading audio
+     * @param {string} url URL of file hosting.
      */
     loadSound(name, url) {
-        // self решает коллизию с текущими объектами this
-        let self = this;
         fetch(url).then(function(response) {
             return response.arrayBuffer();
-        }).then(function(buffer) {
-            // Декодирует ответ, полученный в бинарном виде
-            self.audioContext.decodeAudioData(buffer, function(decodedArrayBuffer) {
-            self.buffers[name] = decodedArrayBuffer;
+        }).then((buffer) => {
+            this.audioContext.decodeAudioData(buffer, (decodedArrayBuffer) => {
+            this.buffers[name] = decodedArrayBuffer;
             });
         }).catch(function (err) {
             console.error(err);
@@ -37,21 +40,19 @@ class SoundPlayer {
     }
 
     /**
-     * Проигрывает выбранный трек.
-     * @param {String} bufferName Заданное имя проигрываемого трека в свойстве-массиве буферов.
+     * Play chosen track
+     * @param {String} bufferName Name of track.
      */
     playSound(bufferName) {
-        let anotherSource = this.audioContext.createBufferSource();
-        anotherSource.buffer = this.buffers[bufferName];
-        anotherSource.connect(this.audioContext.destination);
+        let source = this.audioContext.createBufferSource();
+        source.buffer = this.buffers[bufferName];
+        source.connect(this.audioContext.destination);
 
-        // После проигрывания источник звука нельзя использовать
-        // Не доверяй сборщику мусора :/
-        anotherSource.onended = function() {
+        // Delete source after play ending
+        source.onended = function() {
             delete this;
         };
-
-        anotherSource.start();
+        source.start();
     }
 
     /**

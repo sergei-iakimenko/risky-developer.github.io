@@ -77,38 +77,7 @@ createAudioButton('play_button7', [103, 55]);
 createAudioButton('play_button8', [104, 56]);
 createAudioButton('play_button9', [105, 57]);
 
-/**
- * Отображает сообщение об ошибке
- * @param {string} message - Текст сообщения.
- */
-function showErrorMessage(message) {
-    let div = document.createElement('div');
-    div.id = 'error_message';
-    div.className = 'alert alert-danger alert-dismissible fade in';
-    div.setAttribute('role', 'alert');
-    div.textContent = message;
-
-    // Инициализирование кнопки закрытия сообщения
-    let closeButton = document.createElement('button');
-    closeButton.type = 'button';
-    closeButton.className = 'close';
-    closeButton.setAttribute('data-dismiss', 'alert');
-    closeButton.setAttribute('aria-label', 'Close');
-
-    div.appendChild(closeButton);
-
-    // Добавление значка крестика
-    let span = document.createElement('span');
-    span.setAttribute('aria-hidden', 'true');
-    span.innerHTML = '&times';
-
-    closeButton.appendChild(span);
-    document.body.appendChild(div);
-}
-
 // TODO: сделать обработчик на возможность воспроизведения, canPlayType()
 // TODO: сделать реакцию на нажатие кнопок заданием атрибута accesskey
 // Тогда можно будет воспроизводить файл по фокусу onfocus
 // TODO: сделать проверку на загрузку файлов onplay/onerror. Файлы захостить на бесплатном хостинге
-
-// TODO: использовать промисы для понимания, что можно играть
