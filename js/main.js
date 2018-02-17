@@ -1,10 +1,10 @@
-// Контейнер с данными о кнопках
+// Container with button's data
 const buttons = [];
 
 /**
- * Создаёт элемент массива с данными о нажимаемой кнопке.
- * @param {string} track Расположение трека.
- * @param {Array} keys Ключи, связанные с кодом нажатия клавиш в разных операционных системах.
+ * Create array element with data of tapped button
+ * @param {string} track Button's id
+ * @param {Array} keys Key codes of tapped button in different OS
  */
 const createAudioButton = (track, keys) => {
     let isUp = false;
@@ -15,19 +15,19 @@ const createAudioButton = (track, keys) => {
             return isUp;
         },
         set isUp(value) {
-            // Защита от повторного проигрования из-за auto-repeat-а
+            // Prevent repeat because of auto-repeat
             if (isUp !== value) {
                 isUp = value;
+
                 const btn = document.getElementById(track);
                 if (!btn) {
                     return;
                 }
 
-                // Инициализация проигрывания
+                // Run playing
                 pushButtonEvent.detail.isUp = isUp;
                 pushButtonEvent.detail.buttonObject = btn;
 
-                // Да пошло оно всё в handlePushButton
                 document.dispatchEvent(pushButtonEvent);
             }
         }
@@ -35,8 +35,8 @@ const createAudioButton = (track, keys) => {
 };
 
 /**
- * Находит данные нажатой кнопки в массиве кнопок.
- * @param {number} keyCode Код кнопки.
+ * Find data of tapped button in array of buttons
+ * @param {number} keyCode Button's code
  */
 const findAudioButton = keyCode => {
     return buttons.find(item => item.keys.indexOf(keyCode) !== -1);
@@ -47,8 +47,8 @@ const handleFunctionalButton = keyCode => {
 };
 
 /**
- * Инициализирует обработку нажатия кнопки на странице.
- * @param {boolean} isUp Нажата/отпущена ли кнопка.
+ * Initialize handling of tap button
+ * @param {boolean} isUp Pressed/keydown
  * @param {object} event Tap pad event
  */
 const buttonListener = (isUp, event) => {
@@ -76,8 +76,3 @@ createAudioButton('play_button6', [102, 54]);
 createAudioButton('play_button7', [103, 55]);
 createAudioButton('play_button8', [104, 56]);
 createAudioButton('play_button9', [105, 57]);
-
-// TODO: сделать обработчик на возможность воспроизведения, canPlayType()
-// TODO: сделать реакцию на нажатие кнопок заданием атрибута accesskey
-// Тогда можно будет воспроизводить файл по фокусу onfocus
-// TODO: сделать проверку на загрузку файлов onplay/onerror. Файлы захостить на бесплатном хостинге

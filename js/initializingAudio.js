@@ -1,4 +1,4 @@
-// Пути к аудиофайлам, биндящимся к кнопкам
+// Paths to audio files, which bind to buttons
 const audioPaths = [
     {name: '0audio', path: 'samples/recoded/crash 1 v9 rr1.wav'}
     ,{name: '1audio', path: 'samples/recoded/snare 3 v1 rr1.wav'}
@@ -12,14 +12,14 @@ const audioPaths = [
     ,{name: '9audio', path: 'samples/recoded/Toidiling Tom.wav'}
 ];
 
-// Инициализация событий аудио
+// Initializing of audio events
 const pushButtonEvent = new CustomEvent("pushButton", {
     detail: {}
 });
 
 /**
- * Обрабатывает нажатие кнопок
- * @param {object} event - Событие вызванное нажатием кнопки.
+ * Handle tap button
+ * @param {object} event - Emitted by tap button event
  */
 const handlePushButton = event => {
     event.detail.buttonObject.classList.toggle('pad_active', event.detail.isUp);
@@ -29,5 +29,5 @@ const handlePushButton = event => {
     }
 };
 
-// Привязка к событию нажатия кнопки обработчика
+// Binding tap button to related event
 document.addEventListener('pushButton', handlePushButton);
