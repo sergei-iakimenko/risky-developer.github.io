@@ -24,7 +24,7 @@ class Schedule {
         this.sequences = [];
         this.sequences.push(sequence);
 
-        this.player = new SoundPlayer(audioPaths)
+        this.player = new SoundPlayer(audioPaths);
     }
 
     /**
