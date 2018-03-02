@@ -35,6 +35,18 @@ class Schedule {
     }
 
     /**
+     * Add sequence in list
+     */
+    saveSequence () {
+        let sequence = new Sequence();
+
+        this.sequences.push(sequence);
+        SequenceButtonsManager.appendButton('sequences-set-container', this.currentSequenceIndex);
+
+        this.currentSequenceIndex++;
+    }
+
+    /**
      * Stops all active timeout repeats
      */
     clearAllTimeouts () {
@@ -91,9 +103,9 @@ class Schedule {
      */
     switchScheduleState () {
         if (this.player.mode === 'record') {
-            this.stopSchedule()
+            this.stopSchedule();
         } else {
-            this.startSchedule()
+            this.startSchedule();
         }
     }
 

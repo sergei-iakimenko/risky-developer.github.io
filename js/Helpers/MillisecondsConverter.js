@@ -32,4 +32,4 @@ class MillisecondsConverter {
         const timeObject = this.toTimeObject(incomingMilliseconds);
         return `${timeObject.minutes}:${timeObject.seconds}:${timeObject.milliseconds}`;
     }
-};
+}
