@@ -3,6 +3,7 @@
  */
 class Sequence {
     constructor () {
+        this.timeLength = 0;
         this.timingList = [];
         this.soundNameList = [];
 

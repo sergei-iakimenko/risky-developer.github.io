@@ -15,7 +15,6 @@ class Schedule {
 
         // Special time for replay.
         this.replayTimeLeft = 0;
-        this.currentTimeLength = 0;
         this.timeouts = [];
 
         this.currentSequenceIndex = 0;
@@ -52,18 +51,18 @@ class Schedule {
      * Add sequence in list
      */
     saveSequence () {
-            let sequence = new Sequence();
+        let sequence = new Sequence();
 
-            // Render changed sequence
-            this.sequenceContainer.replaceChild(sequence.container, this.currentSequence.container);
+        // Render changed sequence
+        this.sequenceContainer.replaceChild(sequence.container, this.currentSequence.container);
 
-            this.sequences.push(sequence);
-            SequenceButtonsManager.appendButton('sequences-set-container', this.sequences.length - 1
-                /* ,() => {
-                    this.currentSequence = this.sequences.length - 2;
-                }*/);
+        this.sequences.push(sequence);
+        SequenceButtonsManager.appendButton('sequences-set-container', this.sequences.length - 1
+            /* ,() => {
+                this.currentSequence = this.sequences.length - 2;
+            }*/);
 
-            this.currentSequenceIndex = this.sequences.length - 1;
+        this.currentSequenceIndex = this.sequences.length - 1;
     }
 
     /**
@@ -107,7 +106,7 @@ class Schedule {
      * Stops timer
      */
     stopSchedule () {
-        this.currentTimeLength = this.timeLeft;
+        this.currentSequence.timeLength = this.timeLeft;
         this.timeLeft = 0;
 
         this.replayTimeLeft = 0;
@@ -135,18 +134,33 @@ class Schedule {
     playSchedule () {
         this.startSchedule();
 
+        // if this.currentSequence.timingList !== 0
+        //  then replay current sequence
+        let timingMap = new Map();
+        let timingLength = 0;
+
+        if (this.currentSequence.timeLength !== 0) {
+            this.currentSequence.timingList.forEach((item, index) => {
+                timingMap.set(item, this.currentSequence.soundNameList[index]);
+            });
+            timingLength = this.currentSequence.timeLength;
+
+            // else join timing list and get
+        } else {
+            this.sequences.forEach((sequence) => {
+                timingLength = Math.max(timingLength, sequence.timeLength);
+                sequence.timingList.forEach((item, index) => {
+                    timingMap.set(item, sequence.soundNameList[index]);
+                });
+            });
+        }
+
         let replayTimeoutId = setInterval(() => {
             this.replayTimeLeft += 10;
 
-            if (this.currentSequence.timingList.indexOf(this.replayTimeLeft) >= 0) {
-                this.currentSequence.timingList.forEach((value, index) => {
-
-                    const soundName = this.currentSequence.soundNameList[index];
-                    if (value === this.replayTimeLeft)
-                        this.player.playSound(soundName);
-                });
-
-            } else if (this.replayTimeLeft >= this.currentTimeLength) {
+            if (timingMap.has(this.replayTimeLeft)) {
+                this.player.playSound(timingMap.get(this.replayTimeLeft));
+            } else if (this.replayTimeLeft >= timingLength) {
                 clearInterval(replayTimeoutId);
                 this.stopSchedule();
             }
