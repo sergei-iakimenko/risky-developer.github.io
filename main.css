@@ -99,7 +99,8 @@
     color: #818a91;
 }
 
-.sequence-container, .sequences-set-container {
+.sequence, .sequences-set-container {
+    height: 100%;
     overflow-y: scroll;
     width: 5vw;
 
@@ -113,6 +114,9 @@
 
 .sequences-set-container {
     margin-left: 2vw;
+}
+
+.sequence-container {
 }
 
 /* For mark at what time sound recorded */

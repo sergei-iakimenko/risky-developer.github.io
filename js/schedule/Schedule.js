@@ -19,8 +19,12 @@ class Schedule {
         this.timeouts = [];
 
         this.currentSequenceIndex = 0;
-
         let sequence = new Sequence();
+
+        // Render sequence container
+        this.sequenceContainer = document.getElementsByClassName('sequence-container')[0];
+        this.sequenceContainer.appendChild(sequence.container);
+
         this.sequences = [];
         this.sequences.push(sequence);
 
@@ -35,15 +39,31 @@ class Schedule {
     }
 
     /**
+     * Set current sequence
+     * Should be used to edit/replay sequences
+     * @param index
+     */
+    set currentSequence(index) {
+        this.sequenceContainer.replaceChild(this.sequences[index].container, this.currentSequence.container);
+        this.currentSequenceIndex = index;
+    }
+
+    /**
      * Add sequence in list
      */
     saveSequence () {
-        let sequence = new Sequence();
+            let sequence = new Sequence();
 
-        this.sequences.push(sequence);
-        SequenceButtonsManager.appendButton('sequences-set-container', this.currentSequenceIndex);
+            // Render changed sequence
+            this.sequenceContainer.replaceChild(sequence.container, this.currentSequence.container);
 
-        this.currentSequenceIndex++;
+            this.sequences.push(sequence);
+            SequenceButtonsManager.appendButton('sequences-set-container', this.sequences.length - 1
+                /* ,() => {
+                    this.currentSequence = this.sequences.length - 2;
+                }*/);
+
+            this.currentSequenceIndex = this.sequences.length - 1;
     }
 
     /**

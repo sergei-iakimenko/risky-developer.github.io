@@ -6,10 +6,12 @@ class SequenceButtonsManager {
      * Add button to sequence or set container
      * @param containerClassName container name
      * @param buttonLabel label of creating button
+     * @param callback callback on button clicking
      */
-    static appendButton(containerClassName, buttonLabel) {
+    static appendButton(containerClassName, buttonLabel, callback) {
         const creatingButton = document.createElement('button');
         creatingButton.className = 'timing-mark';
+        creatingButton.onclick = callback;
 
         if (buttonLabel !== undefined && buttonLabel !== '') {
             creatingButton.textContent = buttonLabel;
