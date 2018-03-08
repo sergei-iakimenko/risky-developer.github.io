@@ -129,9 +129,9 @@ class Schedule {
     }
 
     /**
-     * Replays by schedule
+     * Replay schedule with record
      */
-    playSchedule () {
+    replaySchedule () {
         this.startSchedule();
 
         // if this.currentSequence.timingList !== 0
@@ -139,7 +139,10 @@ class Schedule {
         let timingMap = new Map();
         let timingLength = 0;
 
+        // if current sequence is not empty
         if (this.currentSequence.timeLength !== 0) {
+            // set time length of whole schedule by time length of current sequence
+            // + generating timing map from current sequence
             this.currentSequence.timingList.forEach((item, index) => {
                 timingMap.set(item, this.currentSequence.soundNameList[index]);
             });
@@ -148,6 +151,7 @@ class Schedule {
             // else join timing list and get
         } else {
             this.sequences.forEach((sequence) => {
+                // calculating time length of whole schedule by maximum value of all sequences length
                 timingLength = Math.max(timingLength, sequence.timeLength);
                 sequence.timingList.forEach((item, index) => {
                     timingMap.set(item, sequence.soundNameList[index]);
