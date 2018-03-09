@@ -42,10 +42,6 @@ const findAudioButton = keyCode => {
     return buttons.find(item => item.keys.indexOf(keyCode) !== -1);
 };
 
-const handleFunctionalButton = keyCode => {
-    // TODO: implement , (replay) handling. Also it's about all functional buttons
-};
-
 /**
  * Initialize handling of tap button
  * @param {boolean} isUp Pressed/keydown
@@ -57,6 +53,17 @@ const buttonListener = (isUp, event) => {
     if (audioButton) {
         event.preventDefault();
         audioButton.isUp = isUp;
+
+        // Functional buttons handling
+    } else {
+        const buttonData = functionalButtonsSet.get(event.key);
+        if (buttonData && buttonData.buttonObject) {
+            const button = buttonData.buttonObject;
+            if (event.type === 'keydown') {
+                button.click();
+            }
+            button && button.classList.toggle('functional-button_active', event.detail.isUp);
+        }
     }
 };
 

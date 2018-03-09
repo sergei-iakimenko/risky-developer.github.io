@@ -9,7 +9,7 @@ class SoundPlayer {
             this.mode = 'play';
         }
         catch(e) {
-            alert("Browser don't supports Web Audio APO");
+            console.error("Browser don't supports Web Audio API");
         }
 
         // Creation of audio elements and binding them on sound paths

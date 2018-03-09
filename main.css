@@ -48,6 +48,10 @@
     background-color: darkcyan;
 }
 
+.functional-button_active {
+    background-color: darkcyan;
+}
+
 .pad {
     background-color: #4CAF50;
     transition-duration: 0.2s;

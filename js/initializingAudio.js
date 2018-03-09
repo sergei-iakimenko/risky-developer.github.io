@@ -31,3 +31,18 @@ const handlePushButton = event => {
 
 // Binding tap button to related event
 document.addEventListener('pushButton', handlePushButton);
+
+// Buttons' set initialization
+const functionalButtonsSet = new Map();
+functionalButtonsSet.addButtons = function(keys) {
+    if (Array.isArray(keys)) {
+        keys.forEach((item) => {
+            this.set(item, {
+                buttonObject: document.getElementById(item)
+            })
+        })
+    } else {
+        console.error('Check if keys argument is Array');
+    }
+};
+functionalButtonsSet.addButtons(['Enter', '+', '.']);
