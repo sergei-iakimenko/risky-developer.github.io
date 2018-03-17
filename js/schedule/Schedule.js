@@ -21,7 +21,7 @@ class Schedule {
         let sequence = new Sequence();
 
         // Render sequence container
-        this.sequenceContainer = document.getElementsByClassName('sequence-container')[0];
+        this.sequenceContainer = document.getElementById('sequence-container');
         this.sequenceContainer.appendChild(sequence.container);
 
         this.sequences = [];
