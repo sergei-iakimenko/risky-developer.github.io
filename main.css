@@ -39,8 +39,8 @@ body {
 
 .pad-set {
     display: grid;
-    grid-template-columns: 10vh 10vh 10vh 10vh;
-    grid-gap: 1vh;
+    grid-template-columns: 9vw 9vw 9vw 13vw;
+    grid-gap: 1vw;
 }
 
 .functional-button {
