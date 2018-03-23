@@ -1,11 +1,11 @@
 
 body {
-    background-color: #181C1F;
+    background-color: #131B1D;
     font-family: 'Roboto', sans-serif;
 }
 
 .working-table {
-    background-color: #3D4353;
+    background-color: #3C3F41;
     border: solid #606672;
     border-radius: 5px;
     height: 60vh;
@@ -117,7 +117,7 @@ body {
     height: 100%;
     overflow-y: scroll;
     width: 80px;
-    background-color: #606672;
+    background-color: #B1B7B7;
 
     display: flex;
     align-items: center;
