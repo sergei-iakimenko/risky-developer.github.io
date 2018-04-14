@@ -23,3 +23,5 @@ class SequenceButtonsManager {
         timingsElement[0].appendChild(creatingButton);
     }
 }
+
+export default SequenceButtonsManager

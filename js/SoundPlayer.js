@@ -1,4 +1,4 @@
-'use strict';
+import { schedule } from "./main.js";
 
 /** Event driven audio player **/
 class SoundPlayer {
@@ -62,7 +62,10 @@ class SoundPlayer {
     handleTap(tapName) {
         this.playSound(tapName);
         if (this.mode === 'record') {
-            schedule.currentSequence.addTiming(tapName);
+            // TODO: replace getTimeLeft to public method
+            schedule.currentSequence.addTiming(tapName, schedule.getTimeLeft());
         }
     }
 }
+
+export default SoundPlayer

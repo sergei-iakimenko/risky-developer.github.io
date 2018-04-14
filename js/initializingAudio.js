@@ -1,5 +1,5 @@
 // Paths to audio files, which bind to buttons
-const audioPaths = [
+export const audioPaths = [
     {name: '0audio', path: 'samples/recoded/crash 1 v9 rr1.wav'}
     ,{name: '1audio', path: 'samples/recoded/snare 3 v1 rr1.wav'}
     ,{name: '2audio', path: 'samples/recoded/snare 3 v3 rr1.wav'}
@@ -13,7 +13,7 @@ const audioPaths = [
 ];
 
 // Initializing of audio events
-const pushButtonEvent = new CustomEvent("pushButton", {
+export const pushButtonEvent = new CustomEvent("pushButton", {
     detail: {}
 });
 
@@ -33,7 +33,7 @@ const handlePushButton = event => {
 document.addEventListener('pushButton', handlePushButton);
 
 // Buttons' set initialization
-const functionalButtonsSet = new Map();
+export const functionalButtonsSet = new Map();
 functionalButtonsSet.addButtons = function(keys) {
     if (Array.isArray(keys)) {
         keys.forEach((item) => {

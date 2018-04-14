@@ -1,3 +1,8 @@
+import SequenceButtonsManager from '../Helpers/SequenceButtonsManager.js'
+import MillisecondsConverter from '../Helpers/MillisecondsConverter.js'
+import Sequence from './Sequence.js'
+import SoundPlayer from '../SoundPlayer.js'
+
 /**
  * Represents schedule of sound sequences
  * To be enhanced to any size of sequences, now only one
@@ -28,6 +33,10 @@ class Schedule {
         this.sequences.push(sequence);
 
         this.player = new SoundPlayer(audioPaths);
+    }
+
+    getTimeLeft () {
+        return this.timeLeft;
     }
 
     /**
@@ -172,4 +181,4 @@ class Schedule {
     }
 }
 
-let schedule = new Schedule(audioPaths);
+export default Schedule;

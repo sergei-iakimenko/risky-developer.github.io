@@ -1,3 +1,46 @@
+import Schedule from './schedule/Schedule.js'
+import { audioPaths, pushButtonEvent, functionalButtonsSet } from './initializingAudio.js'
+
+export let schedule = new Schedule(audioPaths);
+
+const handleTap = (audioName) =>
+    () => schedule.player.handleTap(audioName);
+
+// set onclick for sound buttons
+let buttonNode0 = document.getElementById('play_button0');
+buttonNode0.onclick = handleTap('0audio');
+let buttonNode1 = document.getElementById('play_button1');
+buttonNode1.onclick = handleTap('1audio');
+let buttonNode2 = document.getElementById('play_button2');
+buttonNode2.onclick = handleTap('2audio');
+let buttonNode3 = document.getElementById('play_button3');
+buttonNode3.onclick = handleTap('3audio');
+let buttonNode4 = document.getElementById('play_button4');
+buttonNode4.onclick = handleTap('4audio');
+let buttonNode5 = document.getElementById('play_button5');
+buttonNode5.onclick = handleTap('5audio');
+let buttonNode6 = document.getElementById('play_button6');
+buttonNode6.onclick = handleTap('6audio');
+let buttonNode7 = document.getElementById('play_button7');
+buttonNode7.onclick = handleTap('7audio');
+let buttonNode8 = document.getElementById('play_button8');
+buttonNode8.onclick = handleTap('8audio');
+let buttonNode9 = document.getElementById('play_button9');
+buttonNode9.onclick = handleTap('9audio');
+
+// set onclick for functional buttons
+let buttonNodeEnter = document.getElementById('Enter');
+buttonNodeEnter.onclick = () =>
+    schedule.switchScheduleState();
+
+let buttonNodePlus = document.getElementById('+');
+buttonNodePlus.onclick = () =>
+    schedule.saveSequence();
+
+let buttonNodeReplay = document.getElementById('.');
+buttonNodeReplay.onclick = () =>
+    schedule.replaySchedule();
+
 // Container with button's data
 const buttons = [];
 

@@ -33,3 +33,5 @@ class MillisecondsConverter {
         return `${timeObject.minutes}:${timeObject.seconds}:${timeObject.milliseconds}`;
     }
 }
+
+export default MillisecondsConverter

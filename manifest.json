@@ -1,6 +1,6 @@
 {
   "short_name": "Heartbeat",
-  "name": "Heartbeat machine",
+  "name": "Heartbeat sounds",
 
   "display": "fullscreen",
   "orientation": "landscape",
@@ -50,5 +50,5 @@
     }
   ],
   "start_url": "/index.html",
-  "description": "Little drum machine which plans to grow up"
+  "description": "Web audio sequencer which plans to grow up."
 }

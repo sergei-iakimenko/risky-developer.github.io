@@ -1,3 +1,5 @@
+import MillisecondsConverter from '../Helpers/MillisecondsConverter.js'
+
 /**
  * Represents sequence of sounds
  */
@@ -12,13 +14,13 @@ class Sequence {
     }
 
     // Adding timing to array
-    addTiming(soundName) {
+    addTiming(soundName, timeLeft) {
         // Adding timing to array
-        this.timingList.push(schedule.timeLeft);
+        this.timingList.push(timeLeft);
         this.soundNameList.push(soundName);
 
         // Adding div with elapsed time from start
-        this.appendTimingButton(MillisecondsConverter.toString(schedule.timeLeft));
+        this.appendTimingButton(MillisecondsConverter.toString(timeLeft));
     }
     /**
      * Appends div with seconds upcoming from start to div with set name
@@ -34,3 +36,5 @@ class Sequence {
         this.container.appendChild(timingMarkButton);
     }
 }
+
+export default Sequence
