@@ -1,4 +1,4 @@
-import MillisecondsConverter from '../Helpers/MillisecondsConverter.js'
+import SecondsConverter from '../Helpers/SecondsConverter.js'
 
 /**
  * Represents sequence of sounds
@@ -10,17 +10,17 @@ class Sequence {
         this.soundNameList = [];
 
         this.container = document.createElement('div');
-        this.container.className = 'sequence'
+        this.container.className = 'sequence';
     }
 
-    // Adding timing to array
-    addTiming(soundName, timeLeft) {
+    // Add timing to array
+    addTiming(soundName, currentTime) {
         // Adding timing to array
-        this.timingList.push(timeLeft);
+        this.timingList.push(currentTime);
         this.soundNameList.push(soundName);
 
         // Adding div with elapsed time from start
-        this.appendTimingButton(MillisecondsConverter.toString(timeLeft));
+        this.appendTimingButton(SecondsConverter.toString(currentTime));
     }
     /**
      * Appends div with seconds upcoming from start to div with set name

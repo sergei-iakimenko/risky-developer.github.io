@@ -1,7 +1,7 @@
-import SequenceButtonsManager from '../Helpers/SequenceButtonsManager.js'
-import MillisecondsConverter from '../Helpers/MillisecondsConverter.js'
-import Sequence from './Sequence.js'
-import SoundPlayer from '../SoundPlayer.js'
+import SequenceButtonsManager from '../Helpers/SequenceButtonsManager.js';
+import SecondsConverter from '../Helpers/SecondsConverter.js';
+import Sequence from './Sequence.js';
+import SoundPlayer from '../SoundPlayer.js';
 
 /**
  * Represents schedule of sound sequences
@@ -16,10 +16,6 @@ class Schedule {
         this.secondsElement = document.getElementById('seconds');
         this.millisecondsElement = document.getElementById('milliseconds');
 
-        this.timeLeft = 0;
-
-        // Special time for replay.
-        this.replayTimeLeft = 0;
         this.timeouts = [];
 
         this.currentSequenceIndex = 0;
@@ -33,10 +29,56 @@ class Schedule {
         this.sequences.push(sequence);
 
         this.player = new SoundPlayer(audioPaths);
+
+        this.startTime = this.currentContextTime;
+
+        this.remainingSamplesCount = 0;
+        this.reduceRemainingSamples = this.reduceRemainingSamples.bind(this);
     }
 
-    getTimeLeft () {
-        return this.timeLeft;
+    /**
+     * Outputs time, elapsed from start button pushed
+     */
+    printTime () {
+        const timeObject = SecondsConverter.toTimeObject(this.currentTime);
+
+        this.minutesElement.textContent = timeObject.minutes;
+        this.secondsElement.textContent = timeObject.seconds;
+        this.millisecondsElement.textContent = timeObject.milliseconds;
+
+        let timeoutId = setTimeout(this.printTime.bind(this), 10);
+        this.timeouts.push(timeoutId);
+    }
+
+    /**
+     * Runs timer
+     */
+    startSchedule () {
+        this.clearAllTimeouts();
+        this.startTime = this.currentContextTime;
+
+        this.timeouts = [];
+        this.player.mode = 'record';
+        this.printTime();
+    }
+
+    /**
+     * Stops timer
+     */
+    stopSchedule () {
+        this.player.mode = 'play';
+        this.clearAllTimeouts();
+    }
+
+    /**
+     * Time from creation of context
+     */
+    get currentContextTime() {
+        return this.player.currentTime;
+    }
+
+    get currentTime () {
+        return this.currentContextTime - this.startTime;
     }
 
     /**
@@ -55,7 +97,6 @@ class Schedule {
         this.sequenceContainer.replaceChild(this.sequences[index].container, this.currentSequence.container);
         this.currentSequenceIndex = index;
     }
-
     /**
      * Add sequence in list
      */
@@ -66,10 +107,7 @@ class Schedule {
         this.sequenceContainer.replaceChild(sequence.container, this.currentSequence.container);
 
         this.sequences.push(sequence);
-        SequenceButtonsManager.appendButton('sequences-set-container', this.sequences.length - 1
-            /* ,() => {
-                this.currentSequence = this.sequences.length - 2;
-            }*/);
+        SequenceButtonsManager.appendButton('sequences-set-container', this.sequences.length - 1);
 
         this.currentSequenceIndex = this.sequences.length - 1;
     }
@@ -84,49 +122,6 @@ class Schedule {
     }
 
     /**
-     * Outputs time, elapsed from start button pushed
-     */
-    printTime () {
-        const timeObject = MillisecondsConverter.toTimeObject(this.timeLeft);
-
-        this.minutesElement.textContent = timeObject.minutes;
-        this.secondsElement.textContent = timeObject.seconds;
-        this.millisecondsElement.textContent = timeObject.milliseconds;
-
-        this.timeLeft += 10;
-        let timeoutId = setTimeout(this.printTime.bind(this), 10);
-        this.timeouts.push(timeoutId);
-    }
-
-    /**
-     * Runs timer
-     */
-    startSchedule () {
-        this.clearAllTimeouts();
-
-        this.timeLeft = 0;
-        this.timeouts = [];
-        this.player.mode = 'record';
-
-        this.printTime();
-    }
-
-    /**
-     * Stops timer
-     */
-    stopSchedule () {
-        this.currentSequence.timeLength = this.timeLeft;
-        this.timeLeft = 0;
-
-        this.replayTimeLeft = 0;
-
-        this.printTime();
-        this.player.mode = 'play';
-
-        this.clearAllTimeouts();
-    }
-
-    /**
      * Switches state of timer
      */
     switchScheduleState () {
@@ -138,9 +133,20 @@ class Schedule {
     }
 
     /**
+     * Reduce count of samples that not played yet
+     */
+    reduceRemainingSamples () {
+        this.remainingSamplesCount--;
+        if (this.remainingSamplesCount < 1) {
+            this.stopSchedule();
+        }
+    };
+
+    /**
      * Replay schedule with record
      */
     replaySchedule () {
+        this.remainingSamplesCount = 0;
         this.startSchedule();
 
         // if this.currentSequence.timingList !== 0
@@ -162,22 +168,18 @@ class Schedule {
             this.sequences.forEach((sequence) => {
                 // calculating time length of whole schedule by maximum value of all sequences length
                 timingLength = Math.max(timingLength, sequence.timeLength);
+
+                this.remainingSamplesCount += sequence.timingList.length;
                 sequence.timingList.forEach((item, index) => {
                     timingMap.set(item, sequence.soundNameList[index]);
                 });
             });
         }
 
-        let replayTimeoutId = setInterval(() => {
-            this.replayTimeLeft += 10;
-
-            if (timingMap.has(this.replayTimeLeft)) {
-                this.player.playSound(timingMap.get(this.replayTimeLeft));
-            } else if (this.replayTimeLeft >= timingLength) {
-                clearInterval(replayTimeoutId);
-                this.stopSchedule();
-            }
-        }, 10);
+        // fill context within nodes with timings
+        for (const timing of timingMap) {
+            this.player.playSound(timing[1], timing[0], this.reduceRemainingSamples);
+        }
     }
 }
 

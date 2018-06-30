@@ -23,6 +23,13 @@ class SoundPlayer {
     }
 
     /**
+     * @returns {number} Current time of the audio context
+     */
+    get currentTime() {
+        return this.audioContext.currentTime;
+    }
+
+    /**
      * Load buffer of track's binary data to buffer array
      * @param {string} name Name (alias) of loading audio
      * @param {string} url URL of file hosting.
@@ -40,19 +47,19 @@ class SoundPlayer {
     }
 
     /**
-     * Play chosen track
+     * Play chosen track with delay
      * @param {String} bufferName Name of track.
+     * @param {number} delayTime delay time of current context
+     * @param endHandler handle end source play
      */
-    playSound(bufferName) {
-        let source = this.audioContext.createBufferSource();
+    playSound(bufferName, delayTime = 0, endHandler) {
+        const source = this.audioContext.createBufferSource();
         source.buffer = this.buffers[bufferName];
         source.connect(this.audioContext.destination);
 
-        // Delete source after play ending
-        source.onended = function() {
-            delete this;
-        };
-        source.start();
+        source.onended = endHandler;
+
+        source.start(this.currentTime + delayTime);
     }
 
     /**
@@ -62,8 +69,7 @@ class SoundPlayer {
     handleTap(tapName) {
         this.playSound(tapName);
         if (this.mode === 'record') {
-            // TODO: replace getTimeLeft to public method
-            schedule.currentSequence.addTiming(tapName, schedule.getTimeLeft());
+            schedule.currentSequence.addTiming(tapName, schedule.currentTime);
         }
     }
 }
