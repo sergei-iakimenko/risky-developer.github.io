@@ -21,10 +21,6 @@ class Schedule {
         this.currentSequenceIndex = 0;
         let sequence = new Sequence();
 
-        // Render sequence container
-        this.sequenceContainer = document.getElementById('sequence-container');
-        this.sequenceContainer.appendChild(sequence.container);
-
         this.sequences = [];
         this.sequences.push(sequence);
 
@@ -89,23 +85,12 @@ class Schedule {
     }
 
     /**
-     * Set current sequence
-     * Should be used to edit/replay sequences
-     * @param index
-     */
-    set currentSequence(index) {
-        this.sequenceContainer.replaceChild(this.sequences[index].container, this.currentSequence.container);
-        this.currentSequenceIndex = index;
-    }
-    /**
      * Add sequence in list
      */
     saveSequence () {
+        Sequence.clearContainer();
+
         let sequence = new Sequence();
-
-        // Render changed sequence
-        this.sequenceContainer.replaceChild(sequence.container, this.currentSequence.container);
-
         this.sequences.push(sequence);
         SequenceButtonsManager.appendButton('sequences-set-container', this.sequences.length - 1);
 
