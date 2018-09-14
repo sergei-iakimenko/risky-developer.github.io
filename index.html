@@ -13,19 +13,21 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
     <meta name='theme-color' content='#131B1D'/>
     <meta name='Description' content='Heartbeat PWA audio sequencer. Source code: https://github.com/risky-developer/heartbeat'>
+
+    <script src="js/main.js" type="module"></script>
 </head>
 <body>
 
-<div class="heartbeat-container">
+<main>
     <div class="working-table row row--wide-padded">
         <div class="pad-set row-item" tabindex="1">
 
             <div class="row row--normal-padded timer-in-pad">
-                <p id="minutes">00</p>
-                <p>:</p>
-                <p id="seconds">00</p>
-                <p>:</p>
-                <p id="milliseconds">0</p>
+                <span id="minutes">00</span>
+                <span class="colon">:</span>
+                <span id="seconds">00</span>
+                <span class="colon">:</span>
+                <span id="milliseconds">0</span>
             </div>
             <button id="play_button7" class="pad">7</button>
             <button id="play_button8" class="pad">8</button>
@@ -50,10 +52,7 @@
         <div class="sequences-set-container" ></div>
 
     </div>
-</div>
-</body>
-
-<script src="js/main.js" type="module"></script>
+</main>
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116062898-1"></script>
@@ -64,5 +63,5 @@
 
     gtag('config', 'UA-116062898-1');
 </script>
-
+</body>
 </html>
