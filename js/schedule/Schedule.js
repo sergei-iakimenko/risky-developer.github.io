@@ -2,6 +2,7 @@ import SequenceButtonsManager from '../Helpers/SequenceButtonsManager.js';
 import SecondsConverter from '../Helpers/SecondsConverter.js';
 import Sequence from './Sequence.js';
 import SoundPlayer from '../SoundPlayer.js';
+import {buttonClassName} from './constants.js';
 
 /**
  * Represents schedule of sound sequences
@@ -92,7 +93,7 @@ class Schedule {
 
         let sequence = new Sequence();
         this.sequences.push(sequence);
-        SequenceButtonsManager.appendButton('sequences-set-container', this.sequences.length - 1);
+        SequenceButtonsManager.appendButton(buttonClassName.sequenceSetContainer, this.sequences.length - 1);
 
         this.currentSequenceIndex = this.sequences.length - 1;
     }

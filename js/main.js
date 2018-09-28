@@ -3,7 +3,7 @@ import { audioPaths, pushButtonEvent, functionalButtonsSet } from './initializin
 
 export let schedule = new Schedule(audioPaths);
 
-const handleTap = (audioName) =>
+export const handleTap = (audioName) =>
     () => schedule.player.handleTap(audioName);
 
 // set onclick for sound buttons
