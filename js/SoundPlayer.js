@@ -62,6 +62,12 @@ class SoundPlayer {
         source.start(this.currentTime + delayTime);
     }
 
+    playSoundsMap(soundsMap, endHandler) {
+        for (const [time, soundName] of soundsMap) {
+            this.playSound(soundName, time, endHandler);
+        }
+    }
+
     /**
      * Handle tap of pad set.
      * @param {String} tapName Name of sample of taped pad.

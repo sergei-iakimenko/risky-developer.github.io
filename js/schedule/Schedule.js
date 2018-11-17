@@ -93,7 +93,12 @@ class Schedule {
 
         let sequence = new Sequence();
         this.sequences.push(sequence);
-        SequenceButtonsManager.appendButton(buttonClassName.sequenceSetContainer, this.sequences.length - 1);
+        SequenceButtonsManager.appendButton(buttonClassName.sequenceSetContainer, this.sequences.length - 1,
+            // Callback on sequence button click to replay saved sequence
+            () => { (seqIndex => {
+                        this.replaySequence(seqIndex)
+                    })(this.sequences.length - 2)}
+        );
 
         this.currentSequenceIndex = this.sequences.length - 1;
     }
@@ -163,9 +168,22 @@ class Schedule {
         }
 
         // fill context within nodes with timings
-        for (const timing of timingMap) {
-            this.player.playSound(timing[1], timing[0], this.reduceRemainingSamples);
-        }
+        this.player.playSoundsMap(timingMap, this.reduceRemainingSamples);
+    }
+
+    /**
+     * Replay sequence by index
+     */
+    replaySequence(index) {
+        let timingMap = new Map();
+        const sequence = this.sequences[index];
+
+        sequence.timingList.forEach((item, index) => {
+            timingMap.set(item, sequence.soundNameList[index]);
+        });
+
+        // fill context within nodes with timings
+        this.player.playSoundsMap(timingMap);
     }
 }
 

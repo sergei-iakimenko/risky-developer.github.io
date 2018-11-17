@@ -33,7 +33,7 @@ body {
 .pad-set {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 0.4vmin;
     width: 100%;
 }
@@ -82,12 +82,12 @@ body {
 }
 
 .plus-button-space {
-    grid-row: 2 / 4;
+    grid-row: 3 / 5;
     grid-column: 4 / 5;
 }
 
 .enter-in-pad {
-    grid-row: 4 / 6;
+    grid-row: 5 / 7;
     grid-column: 4 / 5;
 }
 
