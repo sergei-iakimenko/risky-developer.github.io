@@ -62,20 +62,40 @@ class SoundPlayer {
         source.start(this.currentTime + delayTime);
     }
 
-    playSoundsMap(soundsMap, endHandler) {
-        for (const [time, soundName] of soundsMap) {
-            this.playSound(soundName, time, endHandler);
+    playSoundsMap(timingsMap, endHandler) {
+        for (const [time, names] of timingsMap.timings) {
+            names.forEach(soundName => {
+                this.playSound(soundName, time, endHandler);
+            });
         }
     }
 
     /**
-     * Handle tap of pad set.
-     * @param {String} tapName Name of sample of taped pad.
+     * Play sounds of array of maps
+     * @param {Array} maps
+     * @param {function} endHandler handler of playing end
      */
-    handleTap(tapName) {
-        this.playSound(tapName);
+    playSoundsMaps(maps, endHandler) {
+        maps.forEach(timingsMap => {
+            this.playSoundsMap(timingsMap, endHandler);
+        });
+    }
+
+    /**
+     * Handle tap of pad set.
+     * @param {String} tapName Name of sample of taped pad
+     * @param {function} removeButton Remove buttons
+     */
+    handleTap(tapName, removeButton) {
         if (this.mode === 'record') {
+            this.playSound(tapName);
             schedule.currentSequence.addTiming(tapName, schedule.currentTime);
+        } else if (this.mode === 'remove') {
+            removeButton();
+            schedule.currentSequence.removeTiming(tapName, schedule.currentTime);
+        } else if (this.mode === 'play') {
+            this.playSound(tapName);
+
         }
     }
 }

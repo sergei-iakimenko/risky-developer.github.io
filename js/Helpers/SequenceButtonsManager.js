@@ -13,7 +13,7 @@ class SequenceButtonsManager {
         creatingButton.className = 'timing-mark';
         creatingButton.onclick = callback;
 
-        if (buttonLabel !== undefined && buttonLabel !== '') {
+        if (typeof buttonLabel !== 'undefined' && buttonLabel !== '') {
             creatingButton.textContent = buttonLabel;
         } else {
             console.error('Label of button could not be empty');

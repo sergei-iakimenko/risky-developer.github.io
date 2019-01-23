@@ -38,7 +38,7 @@ body {
     width: 100%;
 }
 
-.functional-button {
+.functional-button, .non-blocking-button {
     font-family: 'Roboto', sans-serif;
     font-size: 1em;
     color: #fff;
@@ -64,6 +64,10 @@ body {
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
     font-size: 1.5em;
+}
+
+.functional-button:disabled, .pad:disabled {
+    background-color: grey;
 }
 
 .zero-pad {

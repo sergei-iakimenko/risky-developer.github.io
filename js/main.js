@@ -3,8 +3,11 @@ import { audioPaths, pushButtonEvent, functionalButtonsSet } from './initializin
 
 export let schedule = new Schedule(audioPaths);
 
-export const handleTap = (audioName) =>
-    () => schedule.player.handleTap(audioName);
+export const handleTap = (audioName, callback) => {
+    return function() {
+        schedule.player.handleTap(audioName, callback && callback.bind(this));
+    }
+};
 
 // set onclick for sound buttons
 let buttonNode0 = document.getElementById('play_button0');
@@ -31,11 +34,15 @@ buttonNode9.onclick = handleTap('9audio');
 // set onclick for functional buttons
 let buttonNodeEnter = document.getElementById('Enter');
 buttonNodeEnter.onclick = () =>
-    schedule.switchScheduleState();
+    schedule.switchPlayerState();
 
 let buttonNodePlus = document.getElementById('+');
 buttonNodePlus.onclick = () =>
     schedule.saveSequence();
+
+let buttonNodeMinus = document.getElementById('-');
+buttonNodeMinus.onclick = () =>
+    schedule.switchRemoveState();
 
 let buttonNodeReplay = document.getElementById('.');
 buttonNodeReplay.onclick = () =>

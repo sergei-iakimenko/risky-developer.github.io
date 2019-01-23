@@ -4,6 +4,12 @@ import Sequence from './Sequence.js';
 import SoundPlayer from '../SoundPlayer.js';
 import {buttonClassName} from './constants.js';
 
+const STATE = {
+    RECORD: 'record',
+    PLAY: 'play',
+    REMOVE: 'remove'
+};
+
 /**
  * Represents schedule of sound sequences
  * To be enhanced to any size of sequences, now only one
@@ -31,6 +37,7 @@ class Schedule {
 
         this.remainingSamplesCount = 0;
         this.reduceRemainingSamples = this.reduceRemainingSamples.bind(this);
+        this.inRemoveState = false;
     }
 
     /**
@@ -51,19 +58,19 @@ class Schedule {
      * Runs timer
      */
     startSchedule () {
-        this.clearAllTimeouts();
         this.startTime = this.currentContextTime;
 
         this.timeouts = [];
-        this.player.mode = 'record';
+        this.setPlayerMode(STATE.RECORD);
         this.printTime();
     }
 
     /**
-     * Stops timer
+     * Set work mode of the player
+     * @param mode {string} Setting mode
      */
-    stopSchedule () {
-        this.player.mode = 'play';
+    setPlayerMode(mode) {
+        this.player.mode = mode;
         this.clearAllTimeouts();
     }
 
@@ -113,14 +120,38 @@ class Schedule {
     }
 
     /**
-     * Switches state of timer
+     * Switche state of timer
      */
-    switchScheduleState () {
-        if (this.player.mode === 'record') {
-            this.stopSchedule();
-        } else {
+    switchPlayerState() {
+        if (this.player.mode === STATE.PLAY) {
             this.startSchedule();
+        } else {
+            this.setPlayerMode(STATE.PLAY);
         }
+    }
+
+    /**
+     * Change state of buttons, disabled/enabled
+     */
+    toggleFunctionalButtons() {
+        const functionalButtons = document.getElementsByClassName('functional-button');
+        const padButtons = document.getElementsByClassName('pad');
+
+        const arr = Array.from(functionalButtons).concat(Array.from(padButtons));
+        arr.forEach(btn => {
+            btn.disabled = !btn.disabled;
+        });
+    }
+
+    /**
+     * Switch state if ready to remove tapped sounds
+     */
+    switchRemoveState() {
+        if (!this.inRemoveState) {
+            this.setPlayerMode(STATE.REMOVE);
+        }
+        this.toggleFunctionalButtons();
+        this.inRemoveState = !this.inRemoveState;
     }
 
     /**
@@ -129,7 +160,7 @@ class Schedule {
     reduceRemainingSamples () {
         this.remainingSamplesCount--;
         if (this.remainingSamplesCount < 1) {
-            this.stopSchedule();
+            this.setPlayerMode(STATE.PLAY);
         }
     };
 
@@ -140,50 +171,25 @@ class Schedule {
         this.remainingSamplesCount = 0;
         this.startSchedule();
 
-        // if this.currentSequence.timingList !== 0
-        //  then replay current sequence
-        let timingMap = new Map();
-        let timingLength = 0;
-
-        // if current sequence is not empty
-        if (this.currentSequence.timeLength !== 0) {
-            // set time length of whole schedule by time length of current sequence
-            // + generating timing map from current sequence
-            this.currentSequence.timingList.forEach((item, index) => {
-                timingMap.set(item, this.currentSequence.soundNameList[index]);
+        this.sequences.forEach((sequence) => {
+            // count number of sounds which should be played
+            sequence.timings.forEach(soundNames => {
+                this.remainingSamplesCount += soundNames.length;
             });
-            timingLength = this.currentSequence.timeLength;
-
-            // else join timing list and get
-        } else {
-            this.sequences.forEach((sequence) => {
-                // calculating time length of whole schedule by maximum value of all sequences length
-                timingLength = Math.max(timingLength, sequence.timeLength);
-
-                this.remainingSamplesCount += sequence.timingList.length;
-                sequence.timingList.forEach((item, index) => {
-                    timingMap.set(item, sequence.soundNameList[index]);
-                });
-            });
-        }
+        });
 
         // fill context within nodes with timings
-        this.player.playSoundsMap(timingMap, this.reduceRemainingSamples);
+        this.player.playSoundsMaps(this.sequences, this.reduceRemainingSamples);
     }
 
     /**
      * Replay sequence by index
      */
     replaySequence(index) {
-        let timingMap = new Map();
         const sequence = this.sequences[index];
 
-        sequence.timingList.forEach((item, index) => {
-            timingMap.set(item, sequence.soundNameList[index]);
-        });
-
         // fill context within nodes with timings
-        this.player.playSoundsMap(timingMap);
+        this.player.playSoundsMap(sequence);
     }
 }
 
