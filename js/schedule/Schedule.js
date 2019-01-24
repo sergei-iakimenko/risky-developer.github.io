@@ -100,11 +100,24 @@ class Schedule {
 
         let sequence = new Sequence();
         this.sequences.push(sequence);
-        SequenceButtonsManager.appendButton(buttonClassName.sequenceSetContainer, this.sequences.length - 1,
+
+        // FIXME: don't do this! Refactor how should be handled tap of sequence button
+        const foolishThat = this;
+
+        SequenceButtonsManager.appendButton(
+            buttonClassName.sequenceSetContainer,
+            this.sequences.length - 1,
             // Callback on sequence button click to replay saved sequence
-            () => { (seqIndex => {
-                        this.replaySequence(seqIndex)
-                    })(this.sequences.length - 2)}
+            function() { (seqIndex => {
+                        if (foolishThat.player.mode === STATE.PLAY) {
+                            foolishThat.replaySequence(seqIndex)
+
+                        } else if (foolishThat.player.mode === STATE.REMOVE) {
+                            delete foolishThat.sequences[seqIndex];
+                            this.parentNode.removeChild(this);
+                        }
+                    })(foolishThat.sequences.length - 2)
+            }
         );
 
         this.currentSequenceIndex = this.sequences.length - 1;
@@ -120,7 +133,7 @@ class Schedule {
     }
 
     /**
-     * Switche state of timer
+     * Switch state of timer
      */
     switchPlayerState() {
         if (this.player.mode === STATE.PLAY) {
