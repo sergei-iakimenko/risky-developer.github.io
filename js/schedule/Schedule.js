@@ -38,6 +38,7 @@ class Schedule {
         this.remainingSamplesCount = 0;
         this.reduceRemainingSamples = this.reduceRemainingSamples.bind(this);
         this.inRemoveState = false;
+        this.shouldReplay = false;
     }
 
     /**
@@ -190,6 +191,9 @@ class Schedule {
     reduceRemainingSamples () {
         this.remainingSamplesCount--;
         if (this.remainingSamplesCount < 1) {
+            if (this.shouldReplay) {
+                this.replaySchedule();
+            }
             this.setPlayerMode(STATE.PLAY);
         }
     };
@@ -210,6 +214,11 @@ class Schedule {
 
         // fill context within nodes with timings
         this.player.playSoundsMaps(this.sequences, this.reduceRemainingSamples);
+    }
+
+    replayLoopSchedule() {
+        this.replaySchedule();
+        this.shouldReplay = true;
     }
 
     /**

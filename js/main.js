@@ -32,6 +32,9 @@ const buttonNode9 = document.getElementById('play_button9');
 buttonNode9.onclick = handleTap('9audio');
 
 // set onclick for functional buttons
+const buttonNodeAsterisk = document.getElementById('*');
+buttonNodeAsterisk.onclick = () =>
+    schedule.replayLoopSchedule();
 const buttonNodeSlash = document.getElementById('/');
 buttonNodeSlash.onclick = () =>
     schedule.clear();
