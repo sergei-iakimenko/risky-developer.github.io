@@ -10,41 +10,44 @@ export const handleTap = (audioName, callback) => {
 };
 
 // set onclick for sound buttons
-let buttonNode0 = document.getElementById('play_button0');
+const buttonNode0 = document.getElementById('play_button0');
 buttonNode0.onclick = handleTap('0audio');
-let buttonNode1 = document.getElementById('play_button1');
+const buttonNode1 = document.getElementById('play_button1');
 buttonNode1.onclick = handleTap('1audio');
-let buttonNode2 = document.getElementById('play_button2');
+const buttonNode2 = document.getElementById('play_button2');
 buttonNode2.onclick = handleTap('2audio');
-let buttonNode3 = document.getElementById('play_button3');
+const buttonNode3 = document.getElementById('play_button3');
 buttonNode3.onclick = handleTap('3audio');
-let buttonNode4 = document.getElementById('play_button4');
+const buttonNode4 = document.getElementById('play_button4');
 buttonNode4.onclick = handleTap('4audio');
-let buttonNode5 = document.getElementById('play_button5');
+const buttonNode5 = document.getElementById('play_button5');
 buttonNode5.onclick = handleTap('5audio');
-let buttonNode6 = document.getElementById('play_button6');
+const buttonNode6 = document.getElementById('play_button6');
 buttonNode6.onclick = handleTap('6audio');
-let buttonNode7 = document.getElementById('play_button7');
+const buttonNode7 = document.getElementById('play_button7');
 buttonNode7.onclick = handleTap('7audio');
-let buttonNode8 = document.getElementById('play_button8');
+const buttonNode8 = document.getElementById('play_button8');
 buttonNode8.onclick = handleTap('8audio');
-let buttonNode9 = document.getElementById('play_button9');
+const buttonNode9 = document.getElementById('play_button9');
 buttonNode9.onclick = handleTap('9audio');
 
 // set onclick for functional buttons
-let buttonNodeEnter = document.getElementById('Enter');
+const buttonNodeSlash = document.getElementById('/');
+buttonNodeSlash.onclick = () =>
+    schedule.clear();
+const buttonNodeEnter = document.getElementById('Enter');
 buttonNodeEnter.onclick = () =>
     schedule.switchPlayerState();
 
-let buttonNodePlus = document.getElementById('+');
+const buttonNodePlus = document.getElementById('+');
 buttonNodePlus.onclick = () =>
     schedule.saveSequence();
 
-let buttonNodeMinus = document.getElementById('-');
+const buttonNodeMinus = document.getElementById('-');
 buttonNodeMinus.onclick = () =>
     schedule.switchRemoveState();
 
-let buttonNodeReplay = document.getElementById('.');
+const buttonNodeReplay = document.getElementById('.');
 buttonNodeReplay.onclick = () =>
     schedule.replaySchedule();
 

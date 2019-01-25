@@ -41,6 +41,23 @@ class Schedule {
     }
 
     /**
+     * Clear whole schedule and both containers of buttons
+     */
+    clear() {
+        this.sequences.splice(0, this.sequences.length);
+        this.sequences.push(new Sequence());
+        this.currentSequenceIndex = 0;
+
+        this.remainingSamplesCount = 0;
+        this.timeouts.splice(0, this.timeouts.length);
+
+        const timingMarkElements = document.querySelectorAll('.timing-mark');
+        for (let button1 of timingMarkElements) {
+            button1.remove();
+        }
+    }
+
+    /**
      * Outputs time, elapsed from start button pushed
      */
     printTime () {
