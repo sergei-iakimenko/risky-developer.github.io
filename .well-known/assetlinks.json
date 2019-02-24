@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "com.example.heartbeat",
+               "sha256_cert_fingerprints": ["44:14:1E:96:42:81:CE:EC:A9:77:A1:B4:2D:7A:6E:20:03:FA:B3:A4:0D:91:5B:49:07:06:51:10:0F:D9:97:90"] }
+}]
