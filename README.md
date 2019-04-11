@@ -15,5 +15,5 @@ Use Numpad part of your keyboard or just click buttons
 
 After you build the whole schedule you can also replay it by tap **,** (comma button).
 
-Already available at [Microsoft Store](https://www.microsoft.com/en-us/p/heartbeat-sounds/9pp3zdtsflrx).
+Already available in [Google Play](https://play.google.com/store/apps/details?id=com.sounds.heartbeat) and [Microsoft Store](https://www.microsoft.com/en-us/p/heartbeat-sounds/9pp3zdtsflrx).
 At this time it works like Proud2Pay. You can use it for free as web site or as PWA application or buy it in the store to support the project.
