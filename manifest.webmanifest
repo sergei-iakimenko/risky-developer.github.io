@@ -59,6 +59,7 @@
      "type": "image/png"
     }
   ],
+  "id": "/index.html",
   "start_url": "/index.html",
   "description": "Web audio sequencer which plans to grow up."
 }
